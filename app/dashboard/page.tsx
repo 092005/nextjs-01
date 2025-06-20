@@ -1,3 +1,5 @@
-export default function Page() {
-    return <p>Dashboard Page</p>;
-  }
+import { redirect } from 'next/navigation';
+
+export default function DashboardPage() {
+  redirect('/dashboard/overview');
+}
