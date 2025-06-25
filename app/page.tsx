@@ -8,15 +8,10 @@ import { authOptions } from '@/auth.config';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
-  try {
-    const session = await getServerSession(authOptions);
-    
-    if (session) {
-      redirect('/dashboard/overview');
-    }
-  } catch (error) {
-    console.error('Home page error:', error);
-    // Continue to home page if there's an error
+  const session = await getServerSession(authOptions);
+  
+  if (session) {
+    redirect('/dashboard/overview');
   }
   
   return (
