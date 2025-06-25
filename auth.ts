@@ -1,13 +1,16 @@
 import NextAuth from 'next-auth';
 import { authOptions } from './auth.config';
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
-const nextAuth = NextAuth(authOptions);
+const { auth, signIn, signOut } = NextAuth(authOptions);
 
-export const auth = nextAuth.auth;
-export const signIn = nextAuth.signIn;
-export const signOut = nextAuth.signOut;
+export { auth, signIn, signOut };
 
 export async function signOutAction() {
   'use server';
-  await signOut({ redirectTo: '/' });
+  const cookieStore = await cookies();
+  cookieStore.delete('next-auth.session-token');
+  cookieStore.delete('__Secure-next-auth.session-token');
+  redirect('/');
 }
